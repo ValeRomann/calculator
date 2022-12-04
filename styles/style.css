@@ -10,4 +10,5 @@ body {
     justify-content: center;
     align-items: center;
     gap: 16px;
+    height: 100vh;
 }
