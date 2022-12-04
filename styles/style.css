@@ -49,6 +49,10 @@ h1 {
     text-shadow: 0 0 3px rgba(0,0,0,0.3);;
 }
 
+#displayDiv div{
+    height: 28px;
+}
+
 #controlPanelDiv button {
     font-family: monospace;
     height: var(--btnWidth);

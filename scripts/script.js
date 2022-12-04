@@ -51,9 +51,26 @@ function addButtonsToPad(buttonsArr, pad, className) {
 
 numPad.addEventListener('click', (e) => {//handle numbers
     e.preventDefault();
-    let currentValue = currentValueDisplay.textContent;
     if (numArray.includes(e.target.textContent)){
-        console.dir(e.target);
         currentValueDisplay.textContent += e.target.textContent;
     }
 });
+
+operPad.addEventListener('click', (e) => {//handle operators
+    e.preventDefault();
+    if (operArray.includes(e.target.textContent)){
+        currentValueDisplay.textContent += e.target.textContent;
+    }
+});
+
+controlsPad.addEventListener('click', (e) => {//handle operators
+    e.preventDefault();
+    if (controlsArray.includes(e.target.textContent)){
+        if (controlsArray[0] = e.target.textContent) resetAll();
+    }
+});
+
+function resetAll() {
+    currentValueDisplay.textContent = '';
+    resultValueDisplay.textContent = '0';
+}
