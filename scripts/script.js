@@ -33,7 +33,7 @@ numPad.setAttribute('id', 'numPad');
 controlPanelDiv.appendChild(numPad);
 
 const controlsArray = ['AC', '±', '%'];
-const numArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, '.'];
+const numArray = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.'];
 const operArray = ['+', '-', '*', '/', '='];
 
 addButtonsToPad(controlsArray, controlsPad, 'controlsBtn');
@@ -48,3 +48,12 @@ function addButtonsToPad(buttonsArr, pad, className) {
         pad.appendChild(btn);
     });
 }
+
+numPad.addEventListener('click', (e) => {//handle numbers
+    e.preventDefault();
+    let currentValue = currentValueDisplay.textContent;
+    if (numArray.includes(e.target.textContent)){
+        console.dir(e.target);
+        currentValueDisplay.textContent += e.target.textContent;
+    }
+});
