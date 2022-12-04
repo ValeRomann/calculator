@@ -14,37 +14,60 @@
 
 body {
     height: 100vh;
-    background-color: #222;
+    background-color: #444;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 16px;
 }
 
 h1 {
     color: #ddd;
+    font-size: 36px;
 }
 
-#controlPanelDiv {
-    width: 200px;
+#calculatorDiv {
+    width: 224px;
+    padding: 12px;
+    background-color: #222;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+#displayDiv {
+    height: 64px;
+    background-color: grey;
+    border-radius: 4px;
+    padding: 5px;
+    box-shadow: inset 0 0 5px  rgba(0,0,0,0.7);
+    text-align: right;
+    font-size: 24px;
+    font-family: monospace;
+    text-shadow: 0 0 3px rgba(0,0,0,0.3);;
 }
 
 #controlPanelDiv button {
     font-family: monospace;
     height: var(--btnWidth);
     width: var(--btnWidth);
-    border-radius: 50%;
     background-color: gold;
+    border-radius: 50%;
     border: none;
+    font-size: 20px;
+    text-align: center;
 }
 
 #controlPanelDiv button:nth-child(10) {
-    width: 98px;
+    width: 97px;
     border-radius: 25px;
 }
 
 #numPad,
 #controlsPad {
+    width: 149px;
     display: flex;
     flex-wrap: wrap;
     gap: var(--gap);
