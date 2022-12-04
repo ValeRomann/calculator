@@ -20,6 +20,10 @@ const controlPanelDiv = document.createElement('div');
 controlPanelDiv.setAttribute('id', 'controlPanelDiv');
 calculatorDiv.appendChild(controlPanelDiv);
 
+const operPad = document.createElement('div');
+operPad.setAttribute('id', 'operPad');
+controlPanelDiv.appendChild(operPad);
+
 const controlsPad = document.createElement('div');
 controlsPad.setAttribute('id', 'controlsPad');
 controlPanelDiv.appendChild(controlsPad);
@@ -27,10 +31,6 @@ controlPanelDiv.appendChild(controlsPad);
 const numPad = document.createElement('div');
 numPad.setAttribute('id', 'numPad');
 controlPanelDiv.appendChild(numPad);
-
-const operPad = document.createElement('div');
-operPad.setAttribute('id', 'operPad');
-controlPanelDiv.appendChild(operPad);
 
 const controlsArray = ['AC', '±', '%'];
 const numArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, '.'];

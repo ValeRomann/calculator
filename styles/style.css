@@ -8,15 +8,35 @@
 }
 
 body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 16px;
-    height: 100vh;
     background-color: #222;
 }
 
 h1 {
     color: #ddd;
+}
+
+#controlPanelDiv {
+    width: 200px;
+}
+
+#controlPanelDiv button{
+    font-family: monospace;
+    height: 50px;
+    width: 50px;
+}
+
+#controlsPad,
+#numPad,
+#operPad {
+    display: inline-block;
+}
+
+#numPad,
+#controlsPad {
+    width: 150px;
+}
+
+#operPad {
+    width: 50px;
+    float: right;
 }
