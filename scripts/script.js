@@ -1,4 +1,5 @@
 const body = document.querySelector('body');
+let timeOutId;
 
 const calculatorDiv = document.createElement('div');
 calculatorDiv.setAttribute('id', 'calculatorDiv');
@@ -49,28 +50,69 @@ function addButtonsToPad(buttonsArr, pad, className) {
     });
 }
 
-numPad.addEventListener('click', (e) => {//handle numbers
+numPad.addEventListener('click', (e) => {//handle numbers ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.']
     e.preventDefault();
     if (numArray.includes(e.target.textContent)){
-        currentValueDisplay.textContent += e.target.textContent;
+        if (resultValueDisplay.textContent != '0') {
+            resultValueDisplay.textContent += e.target.textContent;
+        } else resultValueDisplay.textContent = e.target.textContent;
     }
 });
 
-operPad.addEventListener('click', (e) => {//handle operators
+operPad.addEventListener('click', (e) => {//handle operators ['+', '-', '*', '/', '=']
     e.preventDefault();
     if (operArray.includes(e.target.textContent)){
-        currentValueDisplay.textContent += e.target.textContent;
+        switch (e.target.textContent) {
+            case operArray[0]:
+                currentValueDisplay.textContent = resultValueDisplay.textContent + operArray[0];
+                break;
+            case operArray[1]:
+                currentValueDisplay.textContent = resultValueDisplay.textContent + operArray[1];
+                break;
+            case operArray[2]:
+                currentValueDisplay.textContent = resultValueDisplay.textContent + operArray[2];
+                break;
+            case operArray[3]:
+                currentValueDisplay.textContent = resultValueDisplay.textContent + operArray[3];
+                break;
+            case operArray[4]:
+                currentValueDisplay.textContent = resultValueDisplay.textContent + operArray[4];
+                break;
+            default:
+                break;
+        }
     }
 });
 
-controlsPad.addEventListener('click', (e) => {//handle operators
+controlsPad.addEventListener('click', (e) => {//handle conntrols
+    let current = currentValueDisplay.textContent;
     e.preventDefault();
     if (controlsArray.includes(e.target.textContent)){
-        if (controlsArray[0] = e.target.textContent) resetAll();
+        if (controlsArray[0] === e.target.textContent) resetAll();
+        if (controlsArray[1] === e.target.textContent) {
+            if (resultValueDisplay.textContent != '0') resultValueDisplay.textContent = '-' + resultValueDisplay.textContent;
+        }
+        if (controlsArray[2] === e.target.textContent) resultValueDisplay.textContent /= 100;
     }
 });
 
 function resetAll() {
     currentValueDisplay.textContent = '';
     resultValueDisplay.textContent = '0';
+}
+
+function add(a, b) {
+    return a + b;
+}
+
+function subtract(a, b) {
+    return a - b;
+}
+
+function multiply(a, b) {
+    return a * b;
+}
+
+function divide(a, b) {
+    return a / b;
 }
