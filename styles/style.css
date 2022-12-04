@@ -1,3 +1,8 @@
+:root {
+    --gap: 5px;
+    --btnWidth: 45px;
+}
+
 * {
     padding: 0;
     margin: 0;
@@ -8,7 +13,12 @@
 }
 
 body {
+    height: 100vh;
     background-color: #222;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 h1 {
@@ -19,24 +29,33 @@ h1 {
     width: 200px;
 }
 
-#controlPanelDiv button{
+#controlPanelDiv button {
     font-family: monospace;
-    height: 50px;
-    width: 50px;
+    height: var(--btnWidth);
+    width: var(--btnWidth);
+    border-radius: 50%;
+    background-color: gold;
+    border: none;
 }
 
-#controlsPad,
-#numPad,
-#operPad {
-    display: inline-block;
+#controlPanelDiv button:nth-child(10) {
+    width: 98px;
+    border-radius: 25px;
 }
 
 #numPad,
 #controlsPad {
-    width: 150px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap);
+    margin-bottom: var(--gap);
+    justify-content: space-between;
 }
 
 #operPad {
-    width: 50px;
     float: right;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+    margin-left: var(--gap);
 }
