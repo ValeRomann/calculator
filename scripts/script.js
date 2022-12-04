@@ -19,3 +19,11 @@ displayDiv.appendChild(resultValueDisplay);
 const controlPanelDiv = document.createElement('div');
 controlPanelDiv.setAttribute('id', 'controlPanelDiv');
 calculatorDiv.appendChild(controlPanelDiv);
+
+const numPad = document.createElement('div');
+numPad.setAttribute('id', 'numPad');
+controlPanelDiv.appendChild(numPad);
+
+const operPad = document.createElement('div');
+operPad.setAttribute('id', 'operPad');
+controlPanelDiv.appendChild(operPad);
