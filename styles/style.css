@@ -62,6 +62,7 @@ h1 {
     border: none;
     font-size: 20px;
     text-align: center;
+    color: #222;
 }
 
 #controlPanelDiv button:nth-child(10) {
