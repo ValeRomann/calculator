@@ -19,12 +19,12 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 16px;
 }
 
 h1 {
     color: #ddd;
-    font-size: 36px;
+    font-size: 14px;
+    font-style: italic;
 }
 
 #calculatorDiv {
@@ -34,7 +34,7 @@ h1 {
     border-radius: 12px;
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 14px;
 }
 
 #displayDiv {

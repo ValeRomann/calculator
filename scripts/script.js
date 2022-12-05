@@ -5,6 +5,10 @@ const calculatorDiv = document.createElement('div');
 calculatorDiv.setAttribute('id', 'calculatorDiv');
 body.appendChild(calculatorDiv);
 
+const h1 = document.createElement('h1');
+h1.textContent = 'Calculator';
+calculatorDiv.appendChild(h1);
+
 const displayDiv = document.createElement('div');
 displayDiv.setAttribute('id', 'displayDiv');
 calculatorDiv.appendChild(displayDiv);
