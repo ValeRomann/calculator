@@ -58,8 +58,17 @@ numPad.addEventListener('click', (e) => {//handle numbers ['1', '2', '3', '4', '
     e.preventDefault();
     if (numArray.includes(e.target.textContent)){
         if (resultValueDisplay.textContent != '0') {
+            if(operArray.includes(currentValueDisplay.textContent[currentValueDisplay.textContent.length - 1])) {//if last charater od current value is not operator
+                resultValueDisplay.textContent = '';
+                //currentValueDisplay.textContent += e.target.textContent;
+                
+            }
             resultValueDisplay.textContent += e.target.textContent;
         } else resultValueDisplay.textContent = e.target.textContent;
+    }
+    if (operArray.includes(currentValueDisplay.textContent[currentValueDisplay.textContent.length - 1])) {
+        let operator = currentValueDisplay.textContent[currentValueDisplay.textContent.length - 1];
+        resultValueDisplay.textContent = calculate(currentValueDisplay.textContent.slice(0, -1), resultValueDisplay.textContent, operator);
     }
 });
 
@@ -106,7 +115,7 @@ function resetAll() {
 }
 
 function add(a, b) {
-    return a + b;
+    return +a + +b;
 }
 
 function subtract(a, b) {
@@ -119,4 +128,23 @@ function multiply(a, b) {
 
 function divide(a, b) {
     return a / b;
+}
+
+function calculate(a, b, operator) {//operators ['+', '-', '*', '/', '=']
+    switch (operator) {
+        case operArray[0]:
+            return add(a, b);
+        case operArray[1]:
+            return subtract(a, b);
+        case operArray[2]:
+            return multiply(a, b);
+        case operArray[3]:
+            return divide(a, b);
+        case operArray[4]:
+            currentValueDisplay.textContent = resultValueDisplay.textContent + operArray[4];
+            break;
+        default:
+            break;
+    }
+    return func(a, b)
 }
