@@ -60,22 +60,30 @@ function addButtonsToPad(buttonsArr, pad, className) {
 
 numPad.addEventListener('click', (e) => {//handle numbers ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.']
     e.preventDefault();
-    if (numArray.includes(e.target.textContent)){
-        // if (wasOperator) resultValueDisplay.textContent = '';
-        if (currentNum != '0') {
-            if (wasOperator) {
-                currentNum = '';
-                resultValueDisplay.textContent = currentNum;
-                currentNum += e.target.textContent;
-                resultValueDisplay.textContent = currentNum;
+    let numBtnContent = e.target.textContent;
+    if (numBtnContent === '.') {
+        if (currentNum.includes(numBtnContent)) return;
+        //if (currentNum === '0') currentNum = '0.';
+        currentNum += numBtnContent;
+        resultValueDisplay.textContent = currentNum;
+    } else {
+        if (numArray.includes(numBtnContent)){
+            if (currentNum != '0') {
+                if (wasOperator) {
+                    currentNum = '';
+                    resultValueDisplay.textContent = currentNum;
+                    currentNum += numBtnContent;
+                    resultValueDisplay.textContent = currentNum;
+                } else {
+                    currentNum += numBtnContent;
+                    resultValueDisplay.textContent = currentNum;
+                }
             } else {
-                currentNum += e.target.textContent;
-                resultValueDisplay.textContent = currentNum;
+                currentNum = numBtnContent;
             }
-        } else {
-            currentNum = e.target.textContent;
         }
     }
+    
     resultValueDisplay.textContent = currentNum;
     wasOperator = false;
 });
