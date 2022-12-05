@@ -61,32 +61,41 @@ function addButtonsToPad(buttonsArr, pad, className) {
 numPad.addEventListener('click', (e) => {//handle numbers ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.']
     e.preventDefault();
     if (numArray.includes(e.target.textContent)){
-        if (wasOperator) resultValueDisplay.textContent = '';
+        // if (wasOperator) resultValueDisplay.textContent = '';
         if (currentNum != '0') {
-            currentNum += e.target.textContent;
-            resultValueDisplay.textContent = currentNum;
-            
-        } else resultValueDisplay.textContent = e.target.textContent;
+            if (wasOperator) {
+                currentNum = '';
+                resultValueDisplay.textContent = currentNum;
+                currentNum += e.target.textContent;
+                resultValueDisplay.textContent = currentNum;
+            } else {
+                currentNum += e.target.textContent;
+                resultValueDisplay.textContent = currentNum;
+            }
+        } else {
+            currentNum = e.target.textContent;
+        }
     }
+    resultValueDisplay.textContent = currentNum;
     wasOperator = false;
 });
 
 operPad.addEventListener('click', (e) => {//handle operators ['+', '-', '*', '/', '=']
     e.preventDefault();
     let operator = e.target.textContent;
-    let resaultValue = resultValueDisplay.textContent;
+    let currentDisplayNum = resultValueDisplay.textContent;
     if (operArray.includes(operator)){
         if (operator !== '=') {
             if (currentSum) {
-                currentSum = calculate(currentSum, resaultValue, lastOperator);
+                currentSum = calculate(currentSum, currentDisplayNum, lastOperator);
             } else {
-                currentSum = resaultValue;
+                currentSum = currentDisplayNum;
             }
             lastOperator = operator;
             currentValueDisplay.textContent = currentSum + operator;
         } else {
-            currentValueDisplay.textContent = currentSum + lastOperator + resaultValue + operator;
-            currentSum = calculate(currentSum, resaultValue, lastOperator);
+            currentValueDisplay.textContent = currentSum + lastOperator + currentNum + operator;
+            currentSum = calculate(currentSum, currentNum, lastOperator);
         }
     }
     resultValueDisplay.textContent = currentSum;
@@ -112,6 +121,7 @@ function resetAll() {
     currentValueDisplay.textContent = '';
     resultValueDisplay.textContent = '0';
     currentSum = 0;
+    currentNum = '0';
     wasOperator = false;
     lastOperator = '';
 }
