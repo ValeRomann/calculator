@@ -83,9 +83,10 @@ numPad.addEventListener('click', (e) => {//handle numbers ['1', '2', '3', '4', '
 operPad.addEventListener('click', (e) => {//handle operators ['+', '-', '*', '/', '=']
     e.preventDefault();
     let operator = e.target.textContent;
-    let currentDisplayNum = resultValueDisplay.textContent;
+    let currentDisplayNum = resultValueDisplay.textContent;    
     if (operArray.includes(operator)){
         if (operator !== '=') {
+            if (wasOperator) return;
             if (currentSum) {
                 currentSum = calculate(currentSum, currentDisplayNum, lastOperator);
             } else {
