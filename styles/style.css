@@ -55,6 +55,7 @@ h1 {
 
 #displayDiv div{
     height: 24px;
+    overflow: hidden;
 }
 
 #controlPanelDiv button {
