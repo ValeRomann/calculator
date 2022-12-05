@@ -1,5 +1,4 @@
 const body = document.querySelector('body');
-let timeOutId;
 
 const calculatorDiv = document.createElement('div');
 calculatorDiv.setAttribute('id', 'calculatorDiv');
@@ -41,6 +40,11 @@ const controlsArray = ['AC', '±', '%'];
 const numArray = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.'];
 const operArray = ['+', '-', '*', '/', '='];
 
+let currentSum = null;
+let currentNum = '0';
+let wasOperator = false;
+let lastOperator = '';
+
 addButtonsToPad(controlsArray, controlsPad, 'controlsBtn');
 addButtonsToPad(numArray, numPad, 'numBtn');
 addButtonsToPad(operArray, operPad, 'operBtn');
@@ -57,44 +61,36 @@ function addButtonsToPad(buttonsArr, pad, className) {
 numPad.addEventListener('click', (e) => {//handle numbers ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.']
     e.preventDefault();
     if (numArray.includes(e.target.textContent)){
-        if (resultValueDisplay.textContent != '0') {
-            if(operArray.includes(currentValueDisplay.textContent[currentValueDisplay.textContent.length - 1])) {//if last charater od current value is not operator
-                resultValueDisplay.textContent = '';
-                //currentValueDisplay.textContent += e.target.textContent;
-                
-            }
-            resultValueDisplay.textContent += e.target.textContent;
+        if (wasOperator) resultValueDisplay.textContent = '';
+        if (currentNum != '0') {
+            currentNum += e.target.textContent;
+            resultValueDisplay.textContent = currentNum;
+            
         } else resultValueDisplay.textContent = e.target.textContent;
     }
-    if (operArray.includes(currentValueDisplay.textContent[currentValueDisplay.textContent.length - 1])) {
-        let operator = currentValueDisplay.textContent[currentValueDisplay.textContent.length - 1];
-        resultValueDisplay.textContent = calculate(currentValueDisplay.textContent.slice(0, -1), resultValueDisplay.textContent, operator);
-    }
+    wasOperator = false;
 });
 
 operPad.addEventListener('click', (e) => {//handle operators ['+', '-', '*', '/', '=']
     e.preventDefault();
-    if (operArray.includes(e.target.textContent)){
-        switch (e.target.textContent) {
-            case operArray[0]:
-                currentValueDisplay.textContent = resultValueDisplay.textContent + operArray[0];
-                break;
-            case operArray[1]:
-                currentValueDisplay.textContent = resultValueDisplay.textContent + operArray[1];
-                break;
-            case operArray[2]:
-                currentValueDisplay.textContent = resultValueDisplay.textContent + operArray[2];
-                break;
-            case operArray[3]:
-                currentValueDisplay.textContent = resultValueDisplay.textContent + operArray[3];
-                break;
-            case operArray[4]:
-                currentValueDisplay.textContent = resultValueDisplay.textContent + operArray[4];
-                break;
-            default:
-                break;
+    let operator = e.target.textContent;
+    let resaultValue = resultValueDisplay.textContent;
+    if (operArray.includes(operator)){
+        if (operator !== '=') {
+            if (currentSum) {
+                currentSum = calculate(currentSum, resaultValue, lastOperator);
+            } else {
+                currentSum = resaultValue;
+            }
+            lastOperator = operator;
+            currentValueDisplay.textContent = currentSum + operator;
+        } else {
+            currentValueDisplay.textContent = currentSum + lastOperator + resaultValue + operator;
+            currentSum = calculate(currentSum, resaultValue, lastOperator);
         }
     }
+    resultValueDisplay.textContent = currentSum;
+    wasOperator = true;
 });
 
 controlsPad.addEventListener('click', (e) => {//handle conntrols
@@ -103,7 +99,10 @@ controlsPad.addEventListener('click', (e) => {//handle conntrols
     if (controlsArray.includes(e.target.textContent)){
         if (controlsArray[0] === e.target.textContent) resetAll();
         if (controlsArray[1] === e.target.textContent) {
-            if (resultValueDisplay.textContent != '0') resultValueDisplay.textContent = '-' + resultValueDisplay.textContent;
+            if (resultValueDisplay.textContent != '0') {
+                if (resultValueDisplay.textContent[0] === '-') resultValueDisplay.textContent = resultValueDisplay.textContent.slice(1);
+                else resultValueDisplay.textContent = '-' + resultValueDisplay.textContent;
+            }
         }
         if (controlsArray[2] === e.target.textContent) resultValueDisplay.textContent /= 100;
     }
@@ -112,6 +111,9 @@ controlsPad.addEventListener('click', (e) => {//handle conntrols
 function resetAll() {
     currentValueDisplay.textContent = '';
     resultValueDisplay.textContent = '0';
+    currentSum = 0;
+    wasOperator = false;
+    lastOperator = '';
 }
 
 function add(a, b) {
@@ -131,6 +133,7 @@ function divide(a, b) {
 }
 
 function calculate(a, b, operator) {//operators ['+', '-', '*', '/', '=']
+    if (!a) return b;
     switch (operator) {
         case operArray[0]:
             return add(a, b);
@@ -140,11 +143,7 @@ function calculate(a, b, operator) {//operators ['+', '-', '*', '/', '=']
             return multiply(a, b);
         case operArray[3]:
             return divide(a, b);
-        case operArray[4]:
-            currentValueDisplay.textContent = resultValueDisplay.textContent + operArray[4];
-            break;
         default:
             break;
     }
-    return func(a, b)
 }
