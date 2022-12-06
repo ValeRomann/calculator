@@ -92,6 +92,7 @@ numPad.addEventListener('click', (e) => {//handle numbers ['1', '2', '3', '4', '
 
 operPad.addEventListener('click', (e) => {//handle operators ['+', '-', '*', '/', '=']
     e.preventDefault();
+    if (currentNum[currentNum.length - 1] === '.') return;
     let operator = e.target.textContent;
     let currentDisplayNum = resultValueDisplay.textContent;    
     if (operArray.includes(operator)){
@@ -131,16 +132,21 @@ operPad.addEventListener('click', (e) => {//handle operators ['+', '-', '*', '/'
 });
 
 controlsPad.addEventListener('click', (e) => {//handle conntrols
-    let current = currentValueDisplay.textContent;
     e.preventDefault();
     if (controlsArray.includes(e.target.textContent)){
         if (controlsArray[0] === e.target.textContent) resetAll();
         if (controlsArray[1] === e.target.textContent) {
             if (resultValueDisplay.textContent != '0') {
-                if (resultValueDisplay.textContent[0] === '-') resultValueDisplay.textContent = resultValueDisplay.textContent.slice(1);
-                else resultValueDisplay.textContent = '-' + resultValueDisplay.textContent;
+                if (resultValueDisplay.textContent[0] === '-') {
+                    currentNum = resultValueDisplay.textContent.slice(1);
+                    resultValueDisplay.textContent = currentNum;
+                } else {
+                    currentNum = '-' + resultValueDisplay.textContent;
+                    resultValueDisplay.textContent = currentNum;
+                }
             }
         }
+        if (currentNum[currentNum.length - 1] === '.') return;
         if (controlsArray[2] === e.target.textContent) resultValueDisplay.textContent = roundSum(resultValueDisplay.textContent / 100);
     }
 });
