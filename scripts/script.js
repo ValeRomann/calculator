@@ -42,7 +42,7 @@ const operArray = ['+', '-', '*', '/', '='];
 
 let currentSum = null;
 let currentNum = '0';
-let wasOperator = false;
+let wasOperator = false; //last input was operator?
 let lastOperator = '';
 
 addButtonsToPad(controlsArray, controlsPad, 'controlsBtn');
@@ -82,8 +82,7 @@ numPad.addEventListener('click', (e) => {//handle numbers ['1', '2', '3', '4', '
                 currentNum = numBtnContent;
             }
         }
-    }
-    
+    }    
     resultValueDisplay.textContent = currentNum;
     wasOperator = false;
 });
@@ -94,17 +93,34 @@ operPad.addEventListener('click', (e) => {//handle operators ['+', '-', '*', '/'
     let currentDisplayNum = resultValueDisplay.textContent;    
     if (operArray.includes(operator)){
         if (operator !== '=') {
-            if (wasOperator) return;
-            if (currentSum) {
-                currentSum = calculate(currentSum, currentDisplayNum, lastOperator);
+            if (wasOperator) {
+                currentValueDisplay.textContent = currentSum + operator;
+                lastOperator = operator;
             } else {
-                currentSum = currentDisplayNum;
+                if (currentSum) {
+                    currentSum = calculate(currentSum, currentDisplayNum, lastOperator);
+                    currentSum = roundSum(currentSum);
+                } else {
+                    currentSum = currentDisplayNum;
+                }
+                lastOperator = operator;
+                currentValueDisplay.textContent = currentSum + operator;
             }
-            lastOperator = operator;
-            currentValueDisplay.textContent = currentSum + operator;
         } else {
-            currentValueDisplay.textContent = currentSum + lastOperator + currentNum + operator;
-            currentSum = calculate(currentSum, currentNum, lastOperator);
+            if (currentSum !== null) {
+                currentValueDisplay.textContent = currentSum + lastOperator + currentNum + operator;
+                currentSum = calculate(currentSum, currentNum, lastOperator);
+                currentSum = roundSum(currentSum);
+                if (isNaN(currentSum)) {
+                    resetAll();
+                    resultValueDisplay.textContent = 'error';
+                    return;
+                }
+            } else {
+                currentValueDisplay.textContent = currentNum + operator;
+                resultValueDisplay.textContent = currentNum;
+                return;
+            }
         }
     }
     resultValueDisplay.textContent = currentSum;
@@ -129,7 +145,7 @@ controlsPad.addEventListener('click', (e) => {//handle conntrols
 function resetAll() {
     currentValueDisplay.textContent = '';
     resultValueDisplay.textContent = '0';
-    currentSum = 0;
+    currentSum = null;
     currentNum = '0';
     wasOperator = false;
     lastOperator = '';
@@ -148,11 +164,11 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
+    if (b == 0) return 'error';
     return a / b;
 }
 
 function calculate(a, b, operator) {//operators ['+', '-', '*', '/', '=']
-    if (!a) return b;
     switch (operator) {
         case operArray[0]:
             return add(a, b);
@@ -165,4 +181,10 @@ function calculate(a, b, operator) {//operators ['+', '-', '*', '/', '=']
         default:
             break;
     }
+}
+
+function roundSum(sum) {
+    sum = +sum;
+    if (sum.toString().length > 13) return +sum.toFixed(11);
+    else return sum;
 }
