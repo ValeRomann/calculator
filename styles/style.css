@@ -71,6 +71,14 @@ h1 {
     color: #222;
 }
 
+#controlPanelDiv button:hover {
+    opacity: 0.9;
+}
+
+#controlPanelDiv button:active {
+    opacity: 0.8;
+}
+
 #controlsPad button {
     background-color: rgb(88, 35, 35);
     color: #ccc;
