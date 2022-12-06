@@ -194,6 +194,8 @@ function calculate(a, b, operator) {//operators ['+', '-', '*', '/', '=']
 
 function roundSum(sum) {
     sum = +sum;
-    if (sum.toString().length > 13) return +sum.toFixed(11);
+    let beforeDotNumLength = sum.toString().indexOf('.');
+    if (beforeDotNumLength > -1) beforeDotNumLength -= 1;
+    if (sum.toString().length > 13) return +sum.toFixed(11 - beforeDotNumLength);
     else return sum;
 }
