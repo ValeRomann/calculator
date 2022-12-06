@@ -44,6 +44,7 @@ let currentSum = null;
 let currentNum = '0';
 let wasOperator = false; //last input was operator?
 let lastOperator = '';
+let backspace = false;
 
 addButtonsToPad(controlsArray, controlsPad, 'controlsBtn');
 addButtonsToPad(numArray, numPad, 'numBtn');
@@ -63,7 +64,7 @@ numPad.addEventListener('click', (e) => {//handle numbers ['1', '2', '3', '4', '
     let numBtnContent = e.target.textContent;
     if (numBtnContent === '.') {
         if (currentNum.includes(numBtnContent)) return;
-        //if (currentNum === '0') currentNum = '0.';
+        if (currentNum.length >= 13) return;
         currentNum += numBtnContent;
         resultValueDisplay.textContent = currentNum;
     } else {
@@ -71,10 +72,12 @@ numPad.addEventListener('click', (e) => {//handle numbers ['1', '2', '3', '4', '
             if (currentNum != '0') {
                 if (wasOperator) {
                     currentNum = '';
+                    if (currentNum.length >= 13) return;
                     resultValueDisplay.textContent = currentNum;
                     currentNum += numBtnContent;
                     resultValueDisplay.textContent = currentNum;
                 } else {
+                    if (currentNum.length >= 13) return;
                     currentNum += numBtnContent;
                     resultValueDisplay.textContent = currentNum;
                 }
@@ -82,7 +85,7 @@ numPad.addEventListener('click', (e) => {//handle numbers ['1', '2', '3', '4', '
                 currentNum = numBtnContent;
             }
         }
-    }    
+    }
     resultValueDisplay.textContent = currentNum;
     wasOperator = false;
 });
