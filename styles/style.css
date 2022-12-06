@@ -71,6 +71,16 @@ h1 {
     color: #222;
 }
 
+#controlsPad button {
+    background-color: rgb(88, 35, 35);
+    color: #ccc;
+}
+
+#numPad button {
+    background-color: gray;
+    color: #fff;
+}
+
 #controlPanelDiv button:nth-child(10) {
     width: 97px;
     border-radius: 25px;
