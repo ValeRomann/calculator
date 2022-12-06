@@ -141,7 +141,7 @@ controlsPad.addEventListener('click', (e) => {//handle conntrols
                 else resultValueDisplay.textContent = '-' + resultValueDisplay.textContent;
             }
         }
-        if (controlsArray[2] === e.target.textContent) resultValueDisplay.textContent /= 100;
+        if (controlsArray[2] === e.target.textContent) resultValueDisplay.textContent = roundSum(resultValueDisplay.textContent / 100);
     }
 });
 
