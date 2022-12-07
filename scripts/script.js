@@ -155,8 +155,8 @@ controlsPad.addEventListener('click', (e) => {//handle conntrols
         if (controlsArray[2] === e.target.textContent) resultValueDisplay.textContent = roundSum(resultValueDisplay.textContent / 100);
     } else if (e.target.textContent === 'C') {
         if (currentSum) {
-            resultValueDisplay.textContent = '';
             currentNum = '';
+            resultValueDisplay.textContent = currentNum;
             e.target.textContent = 'AC';
         } else {
             e.target.textContent === 'AC';
