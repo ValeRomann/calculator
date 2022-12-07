@@ -39,6 +39,7 @@ controlPanelDiv.appendChild(numPad);
 const controlsArray = ['AC', '±', '%'];
 const numArray = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.'];
 const operArray = ['+', '-', '*', '/', '='];
+const keyboardEvents = [];
 
 addButtonsToPad(controlsArray, controlsPad, 'controlsBtn');
 addButtonsToPad(numArray, numPad, 'numBtn');
@@ -61,10 +62,31 @@ function addButtonsToPad(buttonsArr, pad, className) {
     });
 }
 
+document.addEventListener('keydown', e => {
+    e.preventDefault();
+    if (numArray.includes(e.key)) numPadHandler(e.key);
+    if (operArray.includes(e.key) && !e.ctrlKey) operPadHandler(e);
+    controlsPadHandler(e);
+});
+
 numPad.addEventListener('click', (e) => {//handle numbers ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.']
     e.preventDefault();
+    numPadHandler(e.target.textContent);
+});
+
+operPad.addEventListener('click', (e) => {//handle operators ['+', '-', '*', '/', '=']
+    e.preventDefault();
+    operPadHandler(e);
+});
+
+controlsPad.addEventListener('click', (e) => {//handle conntrols ['AC', '±', '%']
+    e.preventDefault();
+    controlsPadHandler(e);
+});
+
+function numPadHandler(eContent) {
     resetBtn.textContent = 'C';
-    let numBtnContent = e.target.textContent;
+    let numBtnContent = eContent;
     if (numBtnContent === '.') {
         if (currentNum.includes(numBtnContent)) return;
         if (currentNum.length >= 13) return;
@@ -91,13 +113,14 @@ numPad.addEventListener('click', (e) => {//handle numbers ['1', '2', '3', '4', '
     }
     resultValueDisplay.textContent = currentNum;
     wasOperator = false;
-});
+}
 
-operPad.addEventListener('click', (e) => {//handle operators ['+', '-', '*', '/', '=']
-    e.preventDefault();
+function operPadHandler(e) {
+    let eContent;
+    e.type === 'keydown' ? eContent = e.key : eContent = e.target.textContent;
     reservedNum = currentNum;
     if (currentNum[currentNum.length - 1] === '.') return;
-    let operator = e.target.textContent;
+    let operator = eContent;
     let currentDisplayNum = resultValueDisplay.textContent;    
     if (operArray.includes(operator)){
         if (operator !== '=') {
@@ -134,36 +157,39 @@ operPad.addEventListener('click', (e) => {//handle operators ['+', '-', '*', '/'
     }
     resultValueDisplay.textContent = currentSum;
     wasOperator = true;
-});
+}
 
-controlsPad.addEventListener('click', (e) => {//handle conntrols
-    e.preventDefault();
-    if (controlsArray.includes(e.target.textContent)){
-        if (controlsArray[0] === e.target.textContent) resetAll();
-        if (controlsArray[1] === e.target.textContent) {
-            if (resultValueDisplay.textContent != '0') {
-                if (resultValueDisplay.textContent[0] === '-') {
-                    currentNum = resultValueDisplay.textContent.slice(1);
-                    resultValueDisplay.textContent = currentNum;
-                } else {
-                    currentNum = '-' + resultValueDisplay.textContent;
-                    resultValueDisplay.textContent = currentNum;
-                }
+function controlsPadHandler(e) {
+    let eContent;
+    e.type === 'keydown' ? eContent = e.key : eContent = e.target.textContent;
+    console.log(eContent);
+    if (resetBtn.textContent === 'AC') if (eContent === 'Backspace') resetAll();
+    if (controlsArray[0] === eContent) resetAll();
+    if (controlsArray[1] === eContent ||
+        (eContent === '-' ||
+        (e.key === '-' && e.key === Control))) {
+        if (resultValueDisplay.textContent != '0' && resultValueDisplay.textContent != '') {
+            if (resultValueDisplay.textContent[0] === '-') {
+                currentNum = resultValueDisplay.textContent.slice(1);
+                resultValueDisplay.textContent = currentNum;
+            } else {
+                currentNum = '-' + resultValueDisplay.textContent;
+                resultValueDisplay.textContent = currentNum;
             }
         }
-        if (currentNum[currentNum.length - 1] === '.') return;
-        if (controlsArray[2] === e.target.textContent) resultValueDisplay.textContent = roundSum(resultValueDisplay.textContent / 100);
-    } else if (e.target.textContent === 'C') {
+    }
+    if (currentNum[currentNum.length - 1] === '.') return;
+    if (controlsArray[2] === eContent) resultValueDisplay.textContent = roundSum(resultValueDisplay.textContent / 100);
+    if (eContent === 'Backspace' || eContent === 'C') {
         if (currentSum) {
             currentNum = '';
             resultValueDisplay.textContent = currentNum;
-            e.target.textContent = 'AC';
+            resetBtn.textContent = 'AC';
         } else {
-            e.target.textContent === 'AC';
             resetAll();
         }
     }
-});
+}
 
 function resetAll() {
     currentValueDisplay.textContent = '';
