@@ -90,6 +90,7 @@ function numPadHandler(eContent) {
     if (numBtnContent === '.') {
         if (currentNum.includes(numBtnContent)) return;
         if (currentNum.length >= 13) return;
+        if (currentNum === '') return;
         currentNum += numBtnContent;
         resultValueDisplay.textContent = currentNum;
     } else {
@@ -166,8 +167,7 @@ function controlsPadHandler(e) {
     if (resetBtn.textContent === 'AC') if (eContent === 'Backspace') resetAll();
     if (controlsArray[0] === eContent) resetAll();
     if (controlsArray[1] === eContent ||
-        (eContent === '-' ||
-        (e.key === '-' && e.key === Control))) {
+        (e.key === '-' && e.ctrlKey)) {
         if (resultValueDisplay.textContent != '0' && resultValueDisplay.textContent != '') {
             if (resultValueDisplay.textContent[0] === '-') {
                 currentNum = resultValueDisplay.textContent.slice(1);
