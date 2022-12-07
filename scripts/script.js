@@ -182,9 +182,16 @@ function controlsPadHandler(e) {
     if (controlsArray[2] === eContent) resultValueDisplay.textContent = roundSum(resultValueDisplay.textContent / 100);
     if (eContent === 'Backspace' || eContent === 'C') {
         if (currentSum) {
-            currentNum = '';
-            resultValueDisplay.textContent = currentNum;
-            resetBtn.textContent = 'AC';
+            // currentNum = '';
+            // resultValueDisplay.textContent = currentNum;
+            // resetBtn.textContent = 'AC';
+            if (currentNum.toString().length > 0) {
+                resultValueDisplay.textContent = resultValueDisplay.textContent.slice(0, -1);
+                currentNum = resultValueDisplay.textContent;
+            } else {
+                resetBtn.textContent = 'AC';
+            }
+            console.log()
         } else {
             resetAll();
         }
