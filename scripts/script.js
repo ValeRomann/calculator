@@ -36,6 +36,10 @@ const numPad = document.createElement('div');
 numPad.setAttribute('id', 'numPad');
 controlPanelDiv.appendChild(numPad);
 
+const desk = document.createElement('p');
+desk.innerHTML = `AC/C button - 'Backspace'<br>± button - 'Ctrl' + '-'`
+body.appendChild(desk);
+
 const controlsArray = ['AC', '±', '%'];
 const numArray = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.'];
 const operArray = ['+', '-', '*', '/', '='];
@@ -163,7 +167,6 @@ function operPadHandler(e) {
 function controlsPadHandler(e) {
     let eContent;
     e.type === 'keydown' ? eContent = e.key : eContent = e.target.textContent;
-    console.log(eContent);
     if (resetBtn.textContent === 'AC') if (eContent === 'Backspace') resetAll();
     if (controlsArray[0] === eContent) resetAll();
     if (controlsArray[1] === eContent ||
@@ -181,10 +184,17 @@ function controlsPadHandler(e) {
     if (currentNum[currentNum.length - 1] === '.') return;
     if (controlsArray[2] === eContent) resultValueDisplay.textContent = roundSum(resultValueDisplay.textContent / 100);
     if (eContent === 'Backspace' || eContent === 'C') {
-        if (currentNum.toString().length > 0) {
-            if (currentNum.toString().length === 1) resetBtn.textContent = 'AC';
-            resultValueDisplay.textContent = resultValueDisplay.textContent.slice(0, -1);
-            currentNum = resultValueDisplay.textContent;
+        if (currentSum) {
+            if (currentNum.toString().length > 0) {
+                if (currentNum.toString().length === 1) resetBtn.textContent = 'AC';
+                resultValueDisplay.textContent = resultValueDisplay.textContent.slice(0, -1);
+                currentNum = resultValueDisplay.textContent;
+            } else {
+                resetBtn.textContent = 'AC';
+            }
+            console.log()
+        } else {
+            resetAll();
         }
     }
 }

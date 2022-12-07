@@ -19,6 +19,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 16px;
 }
 
 h1 {
@@ -110,4 +111,10 @@ h1 {
     flex-direction: column;
     gap: var(--gap);
     margin-left: var(--gap);
+}
+
+p {
+    color: #777;
+    font-family: sans-serif;
+    text-align: center;
 }
