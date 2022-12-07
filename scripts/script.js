@@ -181,18 +181,10 @@ function controlsPadHandler(e) {
     if (currentNum[currentNum.length - 1] === '.') return;
     if (controlsArray[2] === eContent) resultValueDisplay.textContent = roundSum(resultValueDisplay.textContent / 100);
     if (eContent === 'Backspace' || eContent === 'C') {
-        if (currentSum) {
-            // currentNum = '';
-            // resultValueDisplay.textContent = currentNum;
-            // resetBtn.textContent = 'AC';
-            if (currentNum.toString().length > 0) {
-                if (currentNum.toString().length === 1) resetBtn.textContent = 'AC';
-                resultValueDisplay.textContent = resultValueDisplay.textContent.slice(0, -1);
-                currentNum = resultValueDisplay.textContent;
-            }
-            console.log()
-        } else {
-            resetAll();
+        if (currentNum.toString().length > 0) {
+            if (currentNum.toString().length === 1) resetBtn.textContent = 'AC';
+            resultValueDisplay.textContent = resultValueDisplay.textContent.slice(0, -1);
+            currentNum = resultValueDisplay.textContent;
         }
     }
 }
