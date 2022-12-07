@@ -40,15 +40,17 @@ const controlsArray = ['AC', '±', '%'];
 const numArray = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.'];
 const operArray = ['+', '-', '*', '/', '='];
 
-let currentSum = null;
-let currentNum = '0';
-let wasOperator = false; //last input was operator?
-let lastOperator = '';
-let backspace = false;
-
 addButtonsToPad(controlsArray, controlsPad, 'controlsBtn');
 addButtonsToPad(numArray, numPad, 'numBtn');
 addButtonsToPad(operArray, operPad, 'operBtn');
+
+const resetBtn = controlsPad.querySelector('button');
+let currentSum = null;
+let currentNum = '0';
+let reservedNum = currentNum;
+let wasOperator = false; //last input was operator?
+let lastOperator = '';
+let backspace = false;
 
 function addButtonsToPad(buttonsArr, pad, className) {
     buttonsArr.forEach(btnContent => {
@@ -61,6 +63,7 @@ function addButtonsToPad(buttonsArr, pad, className) {
 
 numPad.addEventListener('click', (e) => {//handle numbers ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.']
     e.preventDefault();
+    resetBtn.textContent = 'C';
     let numBtnContent = e.target.textContent;
     if (numBtnContent === '.') {
         if (currentNum.includes(numBtnContent)) return;
@@ -92,6 +95,7 @@ numPad.addEventListener('click', (e) => {//handle numbers ['1', '2', '3', '4', '
 
 operPad.addEventListener('click', (e) => {//handle operators ['+', '-', '*', '/', '=']
     e.preventDefault();
+    reservedNum = currentNum;
     if (currentNum[currentNum.length - 1] === '.') return;
     let operator = e.target.textContent;
     let currentDisplayNum = resultValueDisplay.textContent;    
@@ -111,6 +115,7 @@ operPad.addEventListener('click', (e) => {//handle operators ['+', '-', '*', '/'
                 currentValueDisplay.textContent = currentSum + operator;
             }
         } else {
+            resetBtn.textContent = 'AC';
             if (currentSum !== null) {
                 currentValueDisplay.textContent = currentSum + lastOperator + currentNum + operator;
                 currentSum = calculate(currentSum, currentNum, lastOperator);
@@ -148,6 +153,15 @@ controlsPad.addEventListener('click', (e) => {//handle conntrols
         }
         if (currentNum[currentNum.length - 1] === '.') return;
         if (controlsArray[2] === e.target.textContent) resultValueDisplay.textContent = roundSum(resultValueDisplay.textContent / 100);
+    } else if (e.target.textContent === 'C') {
+        if (currentSum) {
+            resultValueDisplay.textContent = '';
+            currentNum = '';
+            e.target.textContent = 'AC';
+        } else {
+            e.target.textContent === 'AC';
+            resetAll();
+        }
     }
 });
 

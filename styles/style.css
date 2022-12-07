@@ -40,7 +40,7 @@ h1 {
 #displayDiv {
     background-color: grey;
     border-radius: 4px;
-    padding: 5px;
+    padding: 6px;
     box-shadow: inset 0 0 5px  rgba(0,0,0,0.7);
     text-align: right;
     font-size: 24px;
