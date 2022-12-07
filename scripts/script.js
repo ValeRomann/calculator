@@ -186,10 +186,9 @@ function controlsPadHandler(e) {
             // resultValueDisplay.textContent = currentNum;
             // resetBtn.textContent = 'AC';
             if (currentNum.toString().length > 0) {
+                if (currentNum.toString().length === 1) resetBtn.textContent = 'AC';
                 resultValueDisplay.textContent = resultValueDisplay.textContent.slice(0, -1);
                 currentNum = resultValueDisplay.textContent;
-            } else {
-                resetBtn.textContent = 'AC';
             }
             console.log()
         } else {
